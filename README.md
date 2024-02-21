@@ -1,4 +1,5 @@
 # ICPC cheatsheet
+
 ## Includes:
 ```C
 #include<iostream>
@@ -16,6 +17,89 @@ or
 
 ```C
 #include<bits/stdc++.h>
+```
+
+## Permutations
+```C++
+vector<int> permutation;
+    for (int i = 0; i < n; i++) {
+        permutation.push_back(i);
+    }
+    do {
+        // process permutation
+    } while (next_permutation(permutation.begin(),permutation.end()));
+```
+
+## Longest increasing subsequence
+`d[l] = a[i]` the **smallest** element at which an increasing subsequence of length  `l`  ends.
+1. The array  `d`  will always be sorted:  `d[l-1] < d[l]`
+2. => There's only 1 position in `d` with `d[l-1] < a[i] < d[l]`
+3. => Use binary search.
+O(NlogN) 
+```C++
+int lis(vector<int> const& a) {
+    int n = a.size();
+    const int INF = 1e9;
+    vector<int> d(n+1, INF);
+    d[0] = -INF;
+
+    for (int i = 0; i < n; i++) {
+        int l = upper_bound(d.begin(), d.end(), a[i]) - d.begin();
+        if (d[l-1] < a[i] && a[i] < d[l])
+            d[l] = a[i];
+    }
+
+    int ans = 0;
+    for (int l = 0; l <= n; l++) {
+        if (d[l] < INF)
+            ans = l;
+    }
+    return ans;
+}
+```
+
+## Nearest smaller element (to the left)
+```C++
+void printPrevSmaller(int arr[], int n)
+{
+    // Create an empty stack
+    stack<int> S;
+ 
+    // Traverse all array elements
+    for (int i=0; i<n; i++)
+    {
+        // Keep removing top element from S while the top
+        // element is greater than or equal to arr[i]
+        while (!S.empty() && S.top() >= arr[i])
+            S.pop();
+ 
+        // If all elements in S were greater than arr[i]
+        if (S.empty())
+            cout << "_, ";
+        else  //Else print the nearest smaller element
+            cout << S.top() << ", ";
+ 
+        // Push this element
+        S.push(arr[i]);
+    }
+}
+```
+
+
+## Custom comparator
+```C++
+struct compare{
+  public:
+  bool operator()(Node& a,Node& b) // overloading both operators 
+  {
+      return a.w < b.w: // if you want increasing order;(i.e increasing for minPQ)
+      return a.w > b.w // if you want reverse of default order;(i.e decreasing for minPQ)
+   }
+};
+
+...
+
+priority_queue<Node, vector<Node>, compare> q;
 ```
 
 ***
