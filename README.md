@@ -228,11 +228,61 @@ for (auto &e : edges) {
   }
 }
 ```
-
+***
 ### Maximum number of disjoint paths
-Find all paths from `1` to `n` such that each vertex appears only in 1 path. Edges have unit capacity.
+Find all paths from `1` to `n` such that each vertex appears only in 1 path. Edges have **UNIT** capacity. 
 
 Using **Edmond-Karps algorithm**, we can find the max flow which is the number of disjoint paths. 
 
-To construct the paths: when we update the flow in the inner while loop, if the current edge used to push the flow is a valid edge (not a reversed edge), then we set `succ[prev][cur]`
-to `true`, where `
+L et `prev = par[cur]`. 
+
+When we update the flow in the inner while loop: 
+- if the current edge `(prev, cur)` used to push the flow is a valid edge (not a reversed edge), then we set `succ[prev][cur] = true`, which means the edge `(prev, cur)` was used to push the flow.
+- Otherwise, we used a *reversed edge* a.k.a `(cur, prev)`, meaning instead of taking the correct edge in the previous rotation (before this augmenting path), we take another edge. So we set `succ[cur][prev] = false`.
+
+To construct the paths: We already have the set of edges used to push flow found in the above section, so we only need to connect the edges together (find parent of each node). If `succ[node][nxt] = true` (we used this edge to push flow) && `par[nxt] == -1` (we haven't used this vertice), then set `succ[node][nxt] = false` because we use this edge now && `par[i] = node`.
+
+```C++
+...
+while ((new_flow = find_flow())) {
+		// new_flow is either 1 or 0 in this problem
+		int cur = n - 1;
+		while (cur != 0) {
+			int prev = par[cur];
+			capacity[cur][prev] += new_flow; // reverse edge
+			capacity[prev][cur] -= new_flow; // edge
+			
+			if (isedge[prev][cur]) {
+				succ[prev][cur] = true;
+			}
+			else {	// if we're using reverse edge, then the corresponding correct edge is not used
+					// because instead of taking the correct edge in the previous rotation (before this augmenting path), we take another edge. 
+				succ[cur][prev] = false;
+			}
+			cur = prev;
+		}
+		cnt++;
+	}
+	cout << cnt << "\n";
+	SET(par, n, -1);
+	par[0] = -2;
+	while (dfs(0)) {
+		int cur =  n - 1;
+		vector<int>v;
+		while (cur != 0) {
+			v.pb(cur);
+			cur = par[cur];
+		}
+		v.pb(0);
+		
+		cout << v.size() << "\n";
+		for (int i = v.size() - 1; i >= 0; i--) cout << v[i]+1 << " ";
+		cout << "\n";
+		
+		SET(par, n, -1);
+		par[0]= -2;
+	};
+```
+***
+
+
