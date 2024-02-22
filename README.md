@@ -428,17 +428,6 @@ int main() {
 	build_tree();
 	
 	for (ll i = 0 ; i < q; i++) {
-		/*
-for (ll b= 0 ; b< n; b++) {
-	cout << b << " = " << tree[b].sum << " " << tree[b].z1 << " " << tree[b].z0 << "\n";
-}
-cout << "----------------\n";
-for (ll b= n; b < 2*n; b++) {
-	cout << b << " = " << tree[b].sum << " " << tree[b].z1 << " " << tree[b].z0 << "\n";
-}
-cout << "******************\n\n";
-*/
-		//cout << "--------------------\n";
 		ll c, l , h;
 		cin >> c >> l >> h; 
 		l--; h--;
