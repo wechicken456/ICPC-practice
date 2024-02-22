@@ -337,7 +337,7 @@ To propagate the update to the RIGHt child, we use the same strategy,
 except that the distances to the LEFT of the previous queries (`z0`) are INCREASED by `(r - l + 1)/2`
 Finally, we set `z0 = z1 = 0` for the current node.
 
-```
+```C++
 struct tree_node {
 	ll sum;
 	ll z1, z0;	
