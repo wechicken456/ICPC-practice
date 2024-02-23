@@ -463,12 +463,12 @@ for (;;) {
   // read input data for the next query
     int sum = 0;
     for (int i=l; i<=r; )
-        if (i % len == 0 && i + len - 1 <= r) {
+        if (i % len == 0 && i + len - 1 <= r) {	
             // if the whole block starting at i belongs to [l, r]
             sum += b[i / len];
             i += len;
         }
-        else {
+        else {  // the tail elements
             sum += a[i];
             ++i;
         }
