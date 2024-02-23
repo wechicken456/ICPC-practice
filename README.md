@@ -475,3 +475,68 @@ for (;;) {
 }
 ```
 
+## LCA
+```C++
+// LCA of a and b
+int get_common(int a, int b) {	// assuming a and b are of the same depth
+	int i = 0;
+	for (; i < tree[a].ancestor.size(); i++) {
+		if (tree[a].ancestor[i] == tree[b].ancestor[i]) {
+			break;
+		}
+	}
+	if (i == 0) {
+		return a;
+	}
+	else if (i == 1) {
+		return boss[a];
+	}
+	else {	// find the first common ancestor (DOESN'T HAVE TO BE LOWEST), then go back 1 power of 2 to find the LOWEST common ancestor
+		return get_common(tree[a].ancestor[i-1], tree[b].ancestor[i-1]);
+	}
+}
+
+// get the k-th ancestor of node
+int get_ancestor(int node, int k) {
+	if (k > tree[node].depth) return -1;
+	if (k == 0) return node;
+	if (k == 1) return boss[node];
+	int idx = floor(log2(k));
+	return get_ancestor(tree[node].ancestor[idx + 1], k - powers_2[idx]);
+} 
+
+void build_node(int cur_node, int cur_depth) {
+	int levels = (cur_depth != 0) ? floor(log2(cur_depth)) : 0;
+	tree[cur_node].depth = cur_depth;
+	tree[cur_node].ancestor = vector<int>(levels + 2);	
+	tree[cur_node].ancestor[0] = cur_node;				// 0th ancestor is itself
+	tree[cur_node].ancestor[1] = boss[cur_node];		// we alr know 1th ancestor is its boss
+	
+	for (int i = 2 ; i < levels + 2; i++) {				// every 2^i-th ancestor is the 2^(i-1)-th ancestor of the previous ancestor
+		tree[cur_node].ancestor[i] = tree[ tree[cur_node].ancestor[i-1] ].ancestor[i-1];
+	}
+	for (int &nxt : employee[cur_node]) {
+		build_node(nxt, cur_depth + 1);
+	}
+}
+
+...
+int main() {
+	powers_2[0] = 1;
+	for (int i =1 ;i < 19; i++) {
+		powers_2[i] = 2*powers_2[i-1];
+	}
+
+	build_node(0, 0);
+	for (int i= 0 ; i < q; i++) {
+		int a, b;
+		cin >> a >> b;
+		a--; b--;
+		if (tree[a].depth > tree[b].depth) a = get_ancestor(a, tree[a].depth - tree[b].depth);
+		else b = get_ancestor(b,tree[b].depth - tree[a].depth);
+		cout << get_common(a , b) + 1 << "\n";
+	}
+}
+```
+
+
