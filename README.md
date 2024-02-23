@@ -567,5 +567,114 @@ void union_sets(int a, int b) {
 }
 ```
 
+## Strongly Connected Componenents
+*The crucial **invariant property is that a node remains on the stack after it has been visited if and only if there exists a path in the input graph from it to some node earlier on the stack**. In other words, it means that in the DFS a node would be **ONLY removed from the stack after all its connected paths have been traversed**. When the DFS will backtrack it would remove the nodes on a single path and return to the root in order to start a new path.*
+
+```
+algorithm tarjan is
+    input: graph G = (V, E)
+    output: set of strongly connected components (sets of vertices)
+   
+    index := 0
+    S := empty stack
+    for each v in V do
+        if v.index is undefined then
+            strongconnect(v)
+   
+    function strongconnect(v)
+        // Set the depth index for v to the smallest unused index
+        v.index := index
+        v.lowlink := index
+        index := index + 1
+        S.push(v)
+        v.onStack := true
+      
+        // Consider successors of v
+        for each (v, w) in E do
+            if w.index is undefined then
+                // Successor w has not yet been visited; recurse on it
+                strongconnect(w)
+                v.lowlink := min(v.lowlink, w.lowlink)
+            else if w.onStack then // If w is not on stack, then (v, w) is an edge pointing to an SCC already found and must be ignored
+                // Successor w is in stack S and hence in the current SCC
+		// this means (v, w) is a cycle. But we haven't returned to w yet, so low[w] hasn't been set => w.index is the correct one.
+		// as there could be multiple edges starting v which leads to a cycle, we take the min.
+                v.lowlink := min(v.lowlink, w.index)
+      
+        // If v is a root node, pop the stack and generate an SCC
+        if v.lowlink = v.index then
+            start a new strongly connected component
+            repeat
+                w := S.pop()
+                w.onStack := false
+                add w to current strongly connected component
+            while w ≠ v
+            output the current strongly connected component
+```
+
+Checking if every vertex is reachable from each other:
+```C++
+// https://open.kattis.com/problems/onewayroads?tab=metadata
+
+
+/*
+https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
+
+The idea is that if for an edge (v,u), if index[v] < low[u], then it means that
+a path starting at u doesn't loop/go to any earlier node, which means that it's a 
+dead end so the answer is NO.
+
+*/
+vector<vector<bool>>edge;
+vector<int>low;
+vector<int>idx;
+int n, m;
+static int t = 0; // time each node is visited
+
+void dfs(int node, int par) {
+	idx[node] = low[node] = t++;
+	for (int i = 0 ;i < n; i++) {
+		if (edge[node][i] == true) {
+			edge[i][node] = false;
+			if (i == par) continue;
+			
+			if (idx[i] == -1) {	// node hasn't been visited  yet
+				dfs(i, node);
+				low[node] = min(low[node], low[i]);
+			}
+			else {					// "already visited" == "found a loop"
+				low[node] = min(low[node], idx[i]);	// there could be multiple loops, find the earliest one.
+													// not using low[i] here because we haven't returned to i yet, so low[i] hasn't been updated
+			}
+			if (idx[node] < low[i]) {	// explained at the header
+				cout << "NO\n";
+				exit(0);
+			}
+		}
+	}
+}
+
+int main () {
+	cin >> n >> m;
+	edge.assign(n, vector<bool>(n, false));
+	low.resize(n);
+	idx.assign(n, -1);
+	for (int i = 0 ;i < m; i++) {
+		int a, b;
+		cin >> a >> b;
+		a--;b--;
+		edge[a][b] = true;
+		edge[b][a] = true;
+	}
+	dfs(0, -1);
+	cout << "YES\n";
+	for (int i = 0 ;i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (edge[i][j]) cout << i + 1 << " " << j + 1 << "\n";
+		}
+	}
+}
+
+```
 
 
