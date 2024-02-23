@@ -103,7 +103,7 @@ priority_queue<Node, vector<Node>, compare> q;
 ```
 
 ***
-### Maximum flow (Dinic)
+## Maximum flow (Dinic)
 ```C++
 struct Edge {
 	int u;	// from v to u
@@ -191,7 +191,7 @@ int main(){
 ```
 
 ***
-### Min cut (Dinic)
+## Min cut (Dinic)
 To count and find edges in the min cut, change `struct Edge` to include the vertex that the edge starts from a.k.a `v`:
 ```C++
 struct Edge {
@@ -229,7 +229,7 @@ for (auto &e : edges) {
 }
 ```
 ***
-### Maximum number of disjoint paths
+## Maximum number of disjoint paths
 Find all paths from `1` to `n` such that each vertex appears only in 1 path. Edges have **UNIT** capacity. 
 
 Using **Edmond-Karps algorithm**, we can find the max flow which is the number of disjoint paths. 
@@ -566,6 +566,7 @@ void union_sets(int a, int b) {
     }
 }
 ```
+***
 
 ## Strongly Connected Componenents
 *The crucial **invariant property is that a node remains on the stack after it has been visited if and only if there exists a path in the input graph from it to some node earlier on the stack**. In other words, it means that in the DFS a node would be **ONLY removed from the stack after all its connected paths have been traversed**. When the DFS will backtrack it would remove the nodes on a single path and return to the root in order to start a new path.*
