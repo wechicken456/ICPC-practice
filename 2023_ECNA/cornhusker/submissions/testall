@@ -1,0 +1,23 @@
+#!/bin/bash
+for file in secret/*.in
+do
+	ans=${file/.in/.ans}
+	out=${file#secret/}
+	out=${out/.in/.out}
+	echo '****************' $file '****************'
+#	cat $file
+#	echo '================' $out '================'
+	./corn < $file > $out
+	cat $out
+	if test ! -e $ans
+	then
+		cp $out $ans
+	else
+		if ! diff $ans $out
+		then
+			echo 'OUTPUT DIFFERS from ' $ans
+		fi
+	fi
+	echo '________________________________________'
+	echo ''
+done

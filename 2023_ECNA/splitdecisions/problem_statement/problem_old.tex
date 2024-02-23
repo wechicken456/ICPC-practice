@@ -1,0 +1,49 @@
+\problemname{Split Decisions}
+
+In a Split Decisions puzzle, each answer (across or down) consists of
+two words which share the letters to be entered in the empty
+squares. In the example, S, E, and W were entered to form SINEW and
+SCREW.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.8\textwidth]{split-dec}
+\caption{A small Split Decisions puzzle, with an example solved clue.}
+\label{fig:split-dec}
+\end{figure}
+
+In particular, a Split Decisions clue consists of two pairs of letters
+and and an ordered pair of nonnegative integers $(m, n)$, where $m$ is the
+number of characters preceding each pair of letters and $n$ is the
+number of characters following each pair of letters.  A clue must also
+have two distinct letters at each position and match only
+one pair of words in the wordlist.  Your task here is to find pairs of
+words that can generate valid clues.  That is, given a list of words,
+find pairs of words which differ only in \textbf{exactly} two
+consecutive letters AND, for the two pairs of different letters that
+would given as their clue, have no other possible solution pair within
+the wordlist.
+
+For example, if your wordlist contained the words CELL, GULL, GUSH,
+HALL, and HASH, you could make two clues: [CE/GU].. for the answer CELL/GULL 
+and [CE/HA].. for CELL/HALL.  Note that the clue [GU/HA].. has two possible
+solutions (GULL/HALL and GUSH/HASH) so it should not be considered.
+
+\section*{Input}
+A number $n$, followed by n lines with one word (string of capital
+letters) in each.  You may assume that each word is at least 3 letters
+and at most 20 letters long and $0 < n < 1500$.
+%\textbf{[We could restrict to having all input words of the same length, or not.]}
+
+\section*{Output}
+The number of unique pairs of words in the input for which a valid
+Split Decisions clue exists.
+%\textbf{We could also ask for the list of pairs
+%(in lexical order, with the two words in each pair also in lexical order).}
+
+%\section*{Comment}
+%The intent is just string processing, not necessarily anything
+%fancy. My relatively naive Python/regex solution can handle $n\leq
+%1000$ or so in reasonable time (assuming all the same length) --- the
+%one test case here is just the first 1000 seven-letter words from
+%the Mac's builtin dictionary.

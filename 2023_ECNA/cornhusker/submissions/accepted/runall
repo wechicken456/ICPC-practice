@@ -1,0 +1,46 @@
+#!/bin/bash
+PROG=corn
+if test $# -eq 1
+then
+	TIME=/bin/time
+else
+	TIME=""
+fi
+testcase=1
+
+while true
+do
+	infile=`printf "../data/sample/%d.in" $testcase`
+	ansfile=`printf "../data/sample/%d.ans" $testcase`
+	if ! test -e "$infile"
+	then
+		break
+	fi
+	echo $infile
+	$TIME ./$PROG < $infile >z
+	diff $ansfile z >zz
+	if test -s zz
+	then echo $ansfile
+		cat zz
+	fi
+	testcase=$((testcase+1))
+done
+
+testcase=1
+for infile in ../../data/secret/*.in
+do
+	ansfile=${infile/.in/.ans}
+	if ! test -e "$infile"
+	then
+		break
+	fi
+	echo $infile
+	$TIME ./$PROG < $infile >z
+	diff $ansfile z >zz
+	if test -s zz
+	then echo $ansfile
+		cat zz
+	fi
+	testcase=$((testcase+1))
+done
+rm -f z zz

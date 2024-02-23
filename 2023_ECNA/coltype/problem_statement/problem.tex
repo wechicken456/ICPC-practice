@@ -1,0 +1,80 @@
+\problemname{Prof.~Fumblemore and the Collatz Conjecture}
+
+The \emph{\textbf{Collatz function}}, C(\emph{n}), on positive
+integers is:
+\begin{center}
+\emph{n}/2 if \emph{n} is even and
+3\emph{n}+1 if \emph{n} is odd
+\end{center}
+The \emph{\textbf{Collatz sequence}}, CS(\emph{n}), of a
+positive integer, \emph{n}, is the sequence
+\begin{center}
+CS(\emph{n}) = n, C(\emph{n}),
+C(C(\emph{n})), C(C(C(\emph{n}))), \ldots{}
+\end{center}
+For example, CS(12) = 12, 6, 3, 10, 5, 16, 8, 4, 2, 1, 4, 2, 1, \ldots{}
+
+The \emph{\textbf{Collatz Conjecture}} (also known as the
+\emph{3n+1 problem}) is that CS(\emph{n}) for every
+positive integer \emph{n} eventually ends repeating the
+sequence 4, 2, 1. To date, the status of
+this conjecture is still unknown. No proof has been given and no
+counterexample has been found up to very large values.
+
+Prof.~Fumblemore wants to study the problem using \emph{Collatz sequence
+types}. The \emph{Collatz sequence type} (CST) of an integer
+\emph{n}, CST(\emph{n}) is a sequence of letters E and
+O (for even and odd) which describe the parity of the values in
+CS(\emph{n}) up to but not including the first power of 2. So,
+
+\begin{center}
+\vspace*{-\baselineskip}
+CST(12) = EEOEO
+\end{center}
+\vspace*{-\baselineskip}
+Note that
+\begin{center}
+\vspace*{-\baselineskip}
+CS(908) = 908, 454, 227, 682, 341, 1024, 512, 256, 128, 64, 32, 16, 8, 4,
+3, 2, \ldots{}
+\end{center}
+\vspace*{-\baselineskip}
+
+so 12 and 908 have the same CST.
+
+Prof.~Fumblemore needs a program which allows him to enter a sequence of
+E's and O's and returns the \textbf{smallest} integer \emph{n}
+for which the given sequence is CST(\emph{n}).
+
+Notes:
+\vspace*{-\baselineskip}
+\begin{itemize}
+\setlength\itemsep{-0.5em}
+\item
+  E's are even numbers which are not powers of 2,
+\item
+  O's are odd numbers greater than 1.
+\item
+  The last letter in a sequence must be an O (if C(\emph{n}) is
+  a power of 2, so is \emph{n})
+\item
+  There can not be two O's in succession (C(odd) = even)
+\item
+  Since, Prof.~Fumblemore does not type well, you must check that the
+  input sequence is valid before attempting to find \emph{n}.
+  That is, the sequence contains only E's and O's, ends in O and no two O's
+  are adjacent.
+\end{itemize}
+\vspace*{-\baselineskip}
+\section*{Input}
+
+Input consists of one line containing a string of up to 50 letters
+composed of E's and O's.
+
+\section*{Output}
+
+There is one line of output that consists of the string \texttt{INVALID}
+if the input line is invalid, or a single decimal integer,
+\emph{n}, such that \emph{n} is the \emph{smallest}
+integer for which CST(\emph{n}) is the input sequence.
+Input will be chosen such that $\emph{n} \le 2^{47}$.

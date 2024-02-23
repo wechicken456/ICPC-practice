@@ -1,0 +1,10 @@
+author: Fred Pickel
+source: 2023 North America East Division Contest
+license: cc by-sa
+
+sandbox-type: PC2_INTERNAL_SANDBOX
+
+limits:
+   timeout: 2
+   memory: 64
+   time_multiplier: 1.33

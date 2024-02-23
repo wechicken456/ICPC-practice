@@ -1,0 +1,9 @@
+source: 2023 North America East Division Contest
+license: permission
+
+sandbox-type: PC2_INTERNAL_SANDBOX
+
+limits:
+   timeout: 1
+   memory: 64
+   time_multiplier: 1.33

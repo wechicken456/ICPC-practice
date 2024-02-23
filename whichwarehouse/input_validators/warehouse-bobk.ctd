@@ -1,0 +1,16 @@
+INT(1,1000,n) SPACE INT(1,n,m) NEWLINE
+REP(n)
+  REP(m,SPACE)
+    INT(0,2147483647)
+  END
+  NEWLINE
+END
+REPI(i,n)
+  REPI(j,n,SPACE)
+    INT(-1,2147483647,d)
+    ASSERT((i == j && d == 0) || (i != j && d != 0))
+  END
+  NEWLINE
+END
+EOF
+

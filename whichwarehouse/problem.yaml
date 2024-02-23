@@ -1,0 +1,9 @@
+# Problem configuration
+source: 2022 ICPC North America Regional Contests (February 25, 2023)
+author: ECNA Judging Team
+license: cc by-sa
+rights_owner: ECNA
+name: Which Warehouse
+
+limits:
+    time_multiplier: 2

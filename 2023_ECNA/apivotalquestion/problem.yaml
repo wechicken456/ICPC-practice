@@ -1,0 +1,10 @@
+author: John Bonomo
+source: 2023 North America East Division Contest
+license: cc by-sa
+
+sandbox-type: PC2_INTERNAL_SANDBOX
+
+limits:
+   timeout: 3
+   memory: 1024
+   time_multiplier: 1.33
